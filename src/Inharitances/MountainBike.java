@@ -9,8 +9,7 @@ public class MountainBike extends Bicycle{
     public int seatHeight;
 
     // the MountainBike subclass has one constructor
-    public MountainBike(int gear, int speed,
-                        int startHeight) {
+    public MountainBike(int gear, int speed, int startHeight) {
         // invoking base-class(Bicycle) constructor
         super(gear, speed);
         seatHeight = startHeight;

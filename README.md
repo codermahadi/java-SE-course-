@@ -216,3 +216,319 @@ public class Test
 } 
 
 ```
+
+### Abstraction in Java
+> Data Abstraction is the property by virtue of which only the essential details are displayed to the user.The trivial or the non-essentials units are not displayed to the user. Ex: A car is viewed as a car rather than its individual components. Data Abstraction may also be defined as the process of identifying only the required characteristics of an object ignoring the irrelevant details.The properties and behaviors of an object differentiate it from other objects of similar type and also help in classifying/grouping the objects.
+Consider a real-life example of a man driving a car. The man only knows that pressing the accelerators will increase the speed of car or applying brakes will stop the car but he does not know about how on pressing the accelerator the speed is actually increasing, he does not know about the inner mechanism of the car or the implementation of accelerator, brakes etc in the car. This is what abstraction is.
+In java, abstraction is achieved by interfaces and abstract classes. We can achieve 100% abstraction using interfaces.
+
+#### Abstract classes and Abstract methods : 
+
+- An abstract class is a class that is declared with abstract keyword.
+- An abstract method is a method that is declared without an implementation.
+- An abstract class may or may not have all abstract methods. Some of them can be concrete methods
+- A method defined abstract must always be redefined in the subclass,thus making overriding compulsory OR either make subclass itself abstract.
+- Any class that contains one or more abstract methods must also be declared with abstract keyword.
+- There can be no object of an abstract class.That is, an abstract class can not be directly instantiated with the new operator.
+- An abstract class can have parametrized constructors and default constructor is always present in an abstract class.
+
+```java
+
+// Java program to illustrate the 
+// concept of Abstraction 
+abstract class Shape  
+{ 
+    String color; 
+      
+    // these are abstract methods 
+    abstract double area(); 
+    public abstract String toString(); 
+      
+    // abstract class can have constructor 
+    public Shape(String color) { 
+        System.out.println("Shape constructor called"); 
+        this.color = color; 
+    } 
+      
+    // this is a concrete method 
+    public String getColor() { 
+        return color; 
+    } 
+} 
+class Circle extends Shape 
+{ 
+    double radius; 
+      
+    public Circle(String color,double radius) { 
+  
+        // calling Shape constructor 
+        super(color); 
+        System.out.println("Circle constructor called"); 
+        this.radius = radius; 
+    } 
+  
+    @Override
+    double area() { 
+        return Math.PI * Math.pow(radius, 2); 
+    } 
+  
+    @Override
+    public String toString() { 
+        return "Circle color is " + super.color +  
+                       "and area is : " + area(); 
+    } 
+      
+} 
+class Rectangle extends Shape{ 
+  
+    double length; 
+    double width; 
+      
+    public Rectangle(String color,double length,double width) { 
+        // calling Shape constructor 
+        super(color); 
+        System.out.println("Rectangle constructor called"); 
+        this.length = length; 
+        this.width = width; 
+    } 
+      
+    @Override
+    double area() { 
+        return length*width; 
+    } 
+  
+    @Override
+    public String toString() { 
+        return "Rectangle color is " + super.color +  
+                           "and area is : " + area(); 
+    } 
+  
+} 
+public class Test  
+{ 
+    public static void main(String[] args) 
+    { 
+        Shape s1 = new Circle("Red", 2.2); 
+        Shape s2 = new Rectangle("Yellow", 2, 4); 
+          
+        System.out.println(s1.toString()); 
+        System.out.println(s2.toString()); 
+    } 
+} 
+
+```
+Output:
+```java
+Shape constructor called
+Circle constructor called
+Shape constructor called
+Rectangle constructor called
+Circle color is Redand area is : 15.205308443374602
+Rectangle color is Yellowand area is : 8.0
+```
+
+#### Encapsulation vs Data Abstraction
+- Encapsulation is data hiding(information hiding) while Abstraction is detail hiding(implementation hiding).
+- While encapsulation groups together data and methods that act upon the data, data abstraction deals with exposing the interface to the user and hiding the details of implementation.
+
+#### Advantages of Abstraction
+
+- It reduces the complexity of viewing the things.
+- Avoids code duplication and increases reusability.
+- Helps to increase security of an application or program as only important details are provided to the user.
+
+#### Interfaces in Java
+
+> Like a class, an interface can have methods and variables, but the methods declared in interface are by default abstract (only method signature, no body).  
+
+- Interfaces specify what a class must do and not how. It is the blueprint of the class.
+- An Interface is about capabilities like a Player may be an interface and any class implementing Player must be able to (or must implement) move(). So it specifies a set of methods that the class has to implement.
+- If a class implements an interface and does not provide method bodies for all functions specified in the interface, then class must be declared abstract. 
+- A Java library example is, Comparator Interface. If a class implements this interface, then it can be used to sort a collection.
+
+##### Why do we use interface ?
+- It is used to achieve total abstraction.
+- Since java does not support multiple inheritance in case of class, but by using interface it can achieve multiple inheritance .
+- It is also used to achieve loose coupling.
+- Interfaces are used to implement abstraction. So the question arises why use interfaces when we have abstract classes?
+
+```java
+
+// A simple interface 
+interface Player 
+{ 
+    final int id = 10; 
+    int move(); 
+} 
+
+```
+
+To implement an interface we use keyword: implement
+
+```java
+
+// Java program to demonstrate working of  
+// interface. 
+import java.io.*; 
+  
+// A simple interface 
+interface in1 
+{ 
+    // public, static and final 
+    final int a = 10; 
+  
+    // public and abstract  
+    void display(); 
+} 
+  
+// A class that implements interface. 
+class testClass implements in1 
+{ 
+    // Implementing the capabilities of 
+    // interface. 
+    public void display() 
+    { 
+        System.out.println("Geek"); 
+    } 
+  
+    // Driver Code 
+    public static void main (String[] args) 
+    { 
+        testClass t = new testClass(); 
+        t.display(); 
+        System.out.println(a); 
+    } 
+}
+```
+
+#### A real world example:
+> Let’s consider the example of vehicles like bicycle, car, bike………,they have common functionalities. So we make an interface and put all these common functionalities. And lets Bicylce, Bike, car ….etc implement all these functionalities in their own class in their own way.
+
+```java
+
+import java.io.*; 
+  
+interface Vehicle { 
+      
+    // all are the abstract methods. 
+    void changeGear(int a); 
+    void speedUp(int a); 
+    void applyBrakes(int a); 
+} 
+  
+class Bicycle implements Vehicle{ 
+      
+    int speed; 
+    int gear; 
+      
+     // to change gear 
+    @Override
+    public void changeGear(int newGear){ 
+          
+        gear = newGear; 
+    } 
+      
+    // to increase speed 
+    @Override
+    public void speedUp(int increment){ 
+          
+        speed = speed + increment; 
+    } 
+      
+    // to decrease speed 
+    @Override
+    public void applyBrakes(int decrement){ 
+          
+        speed = speed - decrement; 
+    } 
+      
+    public void printStates() { 
+         System.out.println("speed: " + speed 
+              + " gear: " + gear); 
+    } 
+} 
+  
+class Bike implements Vehicle { 
+      
+    int speed; 
+    int gear; 
+      
+    // to change gear 
+    @Override
+    public void changeGear(int newGear){ 
+          
+        gear = newGear; 
+    } 
+      
+    // to increase speed 
+    @Override
+    public void speedUp(int increment){ 
+          
+        speed = speed + increment; 
+    } 
+      
+    // to decrease speed 
+    @Override
+    public void applyBrakes(int decrement){ 
+          
+        speed = speed - decrement; 
+    } 
+      
+    public void printStates() { 
+         System.out.println("speed: " + speed 
+             + " gear: " + gear); 
+    } 
+      
+} 
+class GFG { 
+      
+    public static void main (String[] args) { 
+      
+        // creating an inatance of Bicycle  
+        // doing some operations  
+        Bicycle bicycle = new Bicycle(); 
+        bicycle.changeGear(2); 
+        bicycle.speedUp(3); 
+        bicycle.applyBrakes(1); 
+          
+        System.out.println("Bicycle present state :"); 
+        bicycle.printStates(); 
+          
+        // creating instance of bike. 
+        Bike bike = new Bike(); 
+        bike.changeGear(1); 
+        bike.speedUp(4); 
+        bike.applyBrakes(3); 
+          
+        System.out.println("Bike present state :"); 
+        bike.printStates(); 
+    } 
+} 
+
+```
+
+> Java 8
+
+```java
+// An example to show that interfaces can 
+// have methods from JDK 1.8 onwards 
+interface in1 
+{ 
+    final int a = 10; 
+    default void display() 
+    { 
+        System.out.println("hello"); 
+    } 
+} 
+  
+// A class that implements interface. 
+class testClass implements in1 
+{ 
+    // Driver Code 
+    public static void main (String[] args) 
+    { 
+        testClass t = new testClass(); 
+        t.display(); 
+    } 
+} 
+```
